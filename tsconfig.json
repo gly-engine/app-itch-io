@@ -1,14 +1,32 @@
 {
   "$schema": "https://raw.githubusercontent.com/TypeScriptToLua/TypeScriptToLua/master/tsconfig-schema.json",
+  "include": ["src"],
   "compilerOptions": {
-    "outDir": "build"
-  },    
+    "lib": ["es2022"],
+    "outDir": "build",
+    "jsx": "react",
+    "jsxFactory": "std.h",
+    "jsxFragmentFactory": "std.h",
+    "types": [
+      "./node_modules/@gamely/gly-cli/npm/gly-jsx/index.d.ts"
+    ],
+    "paths": {
+      "@gamely/gly-types": ["./node_modules/@gamely/gly-cli/npm/gly-types/index.d.ts"]
+    },
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "baseUrl": "."
+  },
   "tstl": {
     "buildMode": "library",
     "luaTarget": "universal",
     "luaLibImport": "inline",
     "noImplicitGlobalVariables": true,
     "noImplicitSelf": true,
-    "noHeader": true
+    "noHeader": true,
+    "luaPlugins": [
+      { "name": "@gamely/tstl-number" },
+      { "name": "@gamely/tstl-import" }
+    ]
   }
 }
