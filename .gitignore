@@ -1,0 +1,8 @@
+dist/
+build/
+vendor/
+node_modules/
+.DS_Store
+Thumbs.db
+*-lock.json
+cli.lua

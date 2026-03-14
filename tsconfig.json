@@ -1,0 +1,14 @@
+{
+  "$schema": "https://raw.githubusercontent.com/TypeScriptToLua/TypeScriptToLua/master/tsconfig-schema.json",
+  "compilerOptions": {
+    "outDir": "build"
+  },    
+  "tstl": {
+    "buildMode": "library",
+    "luaTarget": "universal",
+    "luaLibImport": "inline",
+    "noImplicitGlobalVariables": true,
+    "noImplicitSelf": true,
+    "noHeader": true
+  }
+}
