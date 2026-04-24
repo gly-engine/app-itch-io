@@ -7,18 +7,19 @@ export const meta = {
     description: 'non-browser client itch-io to play homebrew games with libretro '
 }
 
-const Card = ({title}, std: GlyStd) => <node
-    // @ts-ignore
+type CardProps = {
+  title: string;
+};
+
+const Card = ({title}: CardProps, std: GlyStd) => <node
     hover={() => std.ui.focus()}
     draw={(self: GlyApp) => {
-        // @ts-ignore
         if (std.ui?.isFocused()) {
             std.draw.color(std.color.red)
         }
         else {
             std.draw.color(std.color.skyblue)
         }
-        // data.width works?
         std.draw.rect(0, 0, 0, 50, 50)
     }}>
     <Text>{title}</Text>
@@ -26,7 +27,7 @@ const Card = ({title}, std: GlyStd) => <node
 
 export const callbacks = {
     load: (_: never, std: GlyStd) => {
-        <slide class="1x5">
+        <grid class="1x5" scroll="page">
             <Card title="foo"/>
             <Card title="bar"/>
             <Card title="z"/>
@@ -43,16 +44,12 @@ export const callbacks = {
             <Card title="zagzz"/>
             <Card title="zoozzm"/>
             <Card title="zozp"/>
-        </slide>
+        </grid>
     },
     key: (_: never, std: GlyStd) => {
-        // @ts-ignore
         if (std.key.press.left) std.ui.focus('left')
-        // @ts-ignore
         if (std.key.press.right) std.ui.focus('right')
-        // @ts-ignore
         if (std.key.press.down) std.ui.focus('down')
-        // @ts-ignore
         if (std.key.press.up) std.ui.focus('up')
     }
 }

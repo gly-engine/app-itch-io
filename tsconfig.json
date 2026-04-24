@@ -2,6 +2,7 @@
   "$schema": "https://raw.githubusercontent.com/TypeScriptToLua/TypeScriptToLua/master/tsconfig-schema.json",
   "include": ["src"],
   "compilerOptions": {
+    "ignoreDeprecations": "6.0",
     "lib": ["es2022"],
     "outDir": "build",
     "jsx": "react",
@@ -11,11 +12,13 @@
       "./node_modules/@gamely/gly-cli/npm/gly-jsx/index.d.ts"
     ],
     "paths": {
-      "@gamely/gly-types": ["./node_modules/@gamely/gly-cli/npm/gly-types/index.d.ts"]
+      "@gamely/gly-types": ["../node_modules/@gamely/gly-cli/npm/gly-types/index.d.ts"],
+      "@gamely/acai-jsx/basics/text": ["../node_modules/@gamely/acai-jsx/src/basics/text.tsx"]
     },
     "resolveJsonModule": true,
     "skipLibCheck": true,
-    "baseUrl": "."
+    "rootDir": "src",
+    "baseUrl": "src"
   },
   "tstl": {
     "buildMode": "library",
