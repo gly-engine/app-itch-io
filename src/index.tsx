@@ -1,5 +1,6 @@
 import type { GlyApp, GlyStd } from "@gamely/gly-types";
-import { Text } from "@gamely/acai-jsx/basics/text"
+import { Text } from "node_modules/@gamely/acai-jsx/src/basics/text"
+import { foo } from "./foo";
 
 export const meta = {
     title: 'itch.gly.sh',
@@ -28,7 +29,7 @@ const Card = ({title}: CardProps, std: GlyStd) => <node
 export const callbacks = {
     load: (_: never, std: GlyStd) => {
         <grid class="1x5" scroll="page">
-            <Card title="foo"/>
+            <Card title={foo}/>
             <Card title="bar"/>
             <Card title="z"/>
             <Card title="h"/>

@@ -1,6 +1,6 @@
 {
   "$schema": "https://raw.githubusercontent.com/TypeScriptToLua/TypeScriptToLua/master/tsconfig-schema.json",
-  "include": ["src"],
+  "include": ["src", "node_modules/@gamely/acai-jsx"],
   "compilerOptions": {
     "ignoreDeprecations": "6.0",
     "lib": ["es2022"],
@@ -12,13 +12,12 @@
       "./node_modules/@gamely/gly-cli/npm/gly-jsx/index.d.ts"
     ],
     "paths": {
-      "@gamely/gly-types": ["../node_modules/@gamely/gly-cli/npm/gly-types/index.d.ts"],
-      "@gamely/acai-jsx/basics/text": ["../node_modules/@gamely/acai-jsx/src/basics/text.tsx"]
+      "@gamely/gly-types": ["./node_modules/@gamely/gly-cli/npm/gly-types/index.d.ts"]
     },
     "resolveJsonModule": true,
     "skipLibCheck": true,
-    "rootDir": "src",
-    "baseUrl": "src"
+    "rootDir": ".",
+    "baseUrl": "."
   },
   "tstl": {
     "buildMode": "library",
@@ -29,7 +28,6 @@
     "noHeader": true,
     "luaPlugins": [
       { "name": "@gamely/tstl-number" },
-      { "name": "@gamely/tstl-import" }
     ]
   }
 }
