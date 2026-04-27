@@ -1,7 +1,5 @@
 import { GlyStd } from "@gamely/gly-types";
-import { Image } from "node_modules/@gamely/acai-jsx/src/basics/index";
-import { Text, TextBlock } from "node_modules/@gamely/acai-jsx/src/basics/text";
-
+import { Image, Text, TextBlock } from "node_modules/@gamely/acai-jsx/src/basics";
 
 type cardProps = {
     title: string;

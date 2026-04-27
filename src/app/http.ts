@@ -1,5 +1,5 @@
 import { GlyStd } from "@gamely/gly-types";
-import { request } from "./request"
+import { request } from "node_modules/@gamely/acai-jsx/src/runtime/request"
 
 const base_url = "https://tic80.com";
 
