@@ -9,7 +9,8 @@
     "jsxFactory": "std.h",
     "jsxFragmentFactory": "std.h",
     "types": [
-      "./node_modules/@gamely/gly-cli/npm/gly-jsx/index.d.ts"
+      "./node_modules/@gamely/gly-cli/npm/gly-jsx/index.d.ts",
+      "@typescript-to-lua/language-extensions"
     ],
     "paths": {
       "@gamely/gly-types": ["./node_modules/@gamely/gly-cli/npm/gly-types/index.d.ts"]
