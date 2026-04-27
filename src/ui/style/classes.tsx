@@ -1,5 +1,5 @@
 import { GlyStd } from "@gamely/gly-types";
 
-export function Stylesheet(std: GlyStd) {
+export function loadStylesheet(std: GlyStd) {
     <style class="tic80-container" width={640} height={640}/>
 }

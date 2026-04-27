@@ -1,8 +1,9 @@
 import type { GlyStd, GlyStdWithHttpResponse } from "@gamely/gly-types";
 import { Card } from "./ui/components/card";
-import { Stylesheet } from "./ui/style/classes";
+import { loadStylesheet } from "./ui/style/classes";
 import { Background } from "./ui/style/color";
 import { extractCarts } from "./app";
+import { http, loadHttp, base_url } from "./app/http"
 
 export const meta = {
     title: 'tic80.gly.sh',
@@ -14,24 +15,18 @@ export const config = {
     require: 'http'
 }
 
-function tic80dotcom(std: GlyStd) {
-    return new Promise<string>((resolve, reject) => {
-         std.http.get('https://tic80.com/play')
-            .success((std: GlyStdWithHttpResponse) => resolve(std.http.body as string))
-            .run();
-    })
-}
-
 export const callbacks = {
     load: async (_: never, std: GlyStd) => {
-        Stylesheet(std);
+        loadHttp(std);
+        loadStylesheet(std);
 
-        const content = await tic80dotcom(std);
+        const response = await http.get('/play');
+        const content = response.text();
         const carts = extractCarts(content);
 
         <Background />;
         <grid class="2x2" scroll="page" style="tic80-container">
-            {...carts.map(cart => <Card {...cart} image={`https://tic80.com/${cart.image}`} />)}
+            {...carts.map(cart => <Card {...cart} image={`${base_url}/${cart.image}`} />)}
         </grid>;
     },
     key: (_: never, std: GlyStd) => {
