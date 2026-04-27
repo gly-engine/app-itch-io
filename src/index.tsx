@@ -1,8 +1,8 @@
-import type { GlyApp, GlyStd } from "@gamely/gly-types";
+import type { GlyStd, GlyStdWithHttpResponse } from "@gamely/gly-types";
 import { Card } from "./ui/components/card";
 import { Stylesheet } from "./ui/style/classes";
 import { Background } from "./ui/style/color";
-import { Cart, extractCarts, vendorizedHTML } from "./app";
+import { extractCarts } from "./app";
 
 export const meta = {
     title: 'tic80.gly.sh',
@@ -10,15 +10,28 @@ export const meta = {
     description: 'A standalone client for tic80.com that runs anywhere - including homebrew consoles.'
 }
 
-export const callbacks = {
-    load: (_: never, std: GlyStd) => {
-        Stylesheet(std);
-        
-        const carts = extractCarts(vendorizedHTML);
+export const config = {
+    require: 'http'
+}
 
-        <Background/>;
+function tic80dotcom(std: GlyStd) {
+    return new Promise<string>((resolve, reject) => {
+         std.http.get('https://tic80.com/play')
+            .success((std: GlyStdWithHttpResponse) => resolve(std.http.body as string))
+            .run();
+    })
+}
+
+export const callbacks = {
+    load: async (_: never, std: GlyStd) => {
+        Stylesheet(std);
+
+        const content = await tic80dotcom(std);
+        const carts = extractCarts(content);
+
+        <Background />;
         <grid class="2x2" scroll="page" style="tic80-container">
-            {...carts.map(cart => <Card {...cart} image={`https://tic80.com/${cart.image}`}/>)}
+            {...carts.map(cart => <Card {...cart} image={`https://tic80.com/${cart.image}`} />)}
         </grid>;
     },
     key: (_: never, std: GlyStd) => {
