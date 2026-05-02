@@ -1,9 +1,8 @@
-import type { GlyStd, GlyStdWithHttpResponse } from "@gamely/gly-types";
-import { Card } from "./ui/components/card";
-import { loadStylesheet } from "./ui/style/classes";
-import { Background } from "./ui/style/color";
-import { extractCarts } from "./app";
-import { http, loadHttp, base_url } from "./app/http"
+import type { GlyStd } from "@gamely/gly-types";
+import { loadStylesheet } from "./app/stylesheet";
+import { loadHttp } from "./app/http"
+import { loadPageSystem, goToPage } from "./app/router"
+import { Pages } from "./pages";
 
 export const meta = {
     title: 'tic80.gly.sh',
@@ -16,18 +15,12 @@ export const config = {
 }
 
 export const callbacks = {
-    load: async (_: never, std: GlyStd) => {
+    load: (_: never, std: GlyStd) => {
         loadHttp(std);
         loadStylesheet(std);
+        loadPageSystem(std, Pages, Pages['/splashscreen'], Pages['/error']);
 
-        const response = await http.get('/play');
-        const content = response.text();
-        const carts = extractCarts(content);
-
-        <Background />;
-        <grid class="2x2" scroll="page" style="tic80-container">
-            {...carts.map(cart => <Card {...cart} image={`${base_url}/${cart.image}`} />)}
-        </grid>;
+        goToPage("/list/:page/:cat/:sort", {page: 0, cat: 0, sort: 0});
     },
     key: (_: never, std: GlyStd) => {
         if (std.key.press.left) std.ui.focus('left')
