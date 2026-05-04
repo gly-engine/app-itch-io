@@ -43,9 +43,7 @@ export async function ViewPage({ cart }: ViewPageProps, std: GlyStd) {
   return <node>
     <Background />
     <grid class="1x12" style="tic80-container">
-      <item>
-        <CaptionText align="center" color={Theme.accent}>cartridge details</CaptionText>
-      </item>
+      <CaptionText align="center" color={Theme.accent}>cartridge details</CaptionText>
       <HeroText span={2}>{info.title}</HeroText>
       <CaptionText align="center" color={Theme.textSecondary}>{`by ${info.author}`}</CaptionText>
       <item span={4} style="tic80-margin-8">

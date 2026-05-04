@@ -40,7 +40,7 @@ export function extractCarts(html: string): Cart[] {
 
         const thumb = cart.select(".thumbnail")[0];
         const imgNode = thumb?.select("img")[0];
-        const image = imgNode?.attr?.src as string ?? null;
+        const image = `${base_url}/${imgNode?.attr?.src}`;
 
         const link = thumb?.select("a")[0];
         const url = link?.attr?.href as string ?? null;
@@ -71,7 +71,7 @@ export function extractCartInfos(html: string): CartInfos {
 
     const title = `${h1?.text()?.split(">")?.pop()?.trim()}`;
     const author = `${a[1]?.text()}`;
-    const download = `${a[2]?.attr?.href}`;
+    const download = `${base_url}/${a[2]?.attr?.href}`;
     const image = `${base_url}/${container.select("img")[0]?.attr?.src}`;
     const description = `${container.select("div")[2]?.text()}`;
 

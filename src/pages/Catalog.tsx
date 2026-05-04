@@ -19,13 +19,14 @@ type CatalogPageProps = {
     sort: `${number}`;
     page: `${number}`;
     cat: `${number}`;
+    focus?: `${number}`;
 }
 
 function HeaderBar(props: CatalogPageProps, std: GlyStd) {
     const page = Number(props.page) + 1;
 
     return <node>
-        <Rect backgroundColor={Theme.surface} borderColor={Theme.border}/>
+        <Rect backgroundColor={Theme.surface} borderColor={Theme.border} />
         <grid class="3x1" style="tic80-margin-8">
             <CaptionText color={Theme.accent}>tic80 cartridges</CaptionText>
             <CaptionText align="center">sort: trending</CaptionText>
@@ -36,7 +37,7 @@ function HeaderBar(props: CatalogPageProps, std: GlyStd) {
 
 function FooterHints(_: {}, std: GlyStd) {
     return <node>
-        <Rect backgroundColor={Theme.surface}/>
+        <Rect backgroundColor={Theme.surface} />
         <grid class="4x1" style="tic80-margin-8">
             <CaptionText color={Theme.accent}>a open</CaptionText>
             <CaptionText>↑↓←→ move</CaptionText>
@@ -46,31 +47,31 @@ function FooterHints(_: {}, std: GlyStd) {
     </node>;
 }
 
-export function Card({cart, image, title, description, author}: CardProp, std: GlyStd) {
+export function Card({ cart, image, title, description, author }: CardProp, std: GlyStd) {
     const [getBackgroundColor, setBackgroundColor] = createState<number>(Theme.surface);
     const [getBorderColor, setBorderColor] = createState<number>(Theme.border);
 
     return (
-        <node
-            click={() => goToPage('/view/:cart', {cart})}
-            focus={() => {
-                setBackgroundColor(Theme.surfaceFocus);
-                setBorderColor(Theme.borderFocus);
-            }}
-            unfocus={() => {
-                setBackgroundColor(Theme.surface);
-                setBorderColor(Theme.border);
-            }}>
-            <Rect backgroundColor={getBackgroundColor} borderColor={getBorderColor}/>
-            <grid class="1x16" style="tic80-margin-6">
-                <item span={12}>
-                    <Image src={image} align="left" valign="top" />
-                </item>
-                <TitleText>{title.toUpperCase()}</TitleText>
-                <CaptionText color={Theme.textSecondary}>{`by ${author}`}</CaptionText>
-                <CaptionBlock span={2}>{description}</CaptionBlock>
-            </grid>
-        </node>
+        <item id={`cart-${cart}`} style="tic80-cart">
+            <node
+                click={() => goToPage('/view/:cart', { cart })}
+                focus={() => {
+                    setBackgroundColor(Theme.surfaceFocus);
+                    setBorderColor(Theme.borderFocus);
+                }}
+                unfocus={() => {
+                    setBackgroundColor(Theme.surface);
+                    setBorderColor(Theme.border);
+                }}>
+                <Rect backgroundColor={getBackgroundColor} borderColor={getBorderColor} />
+                <grid class="1x16" style="tic80-margin-6">
+                    <Image span={12} src={image} align="center" valign="top" />
+                    <TitleText>{title.toUpperCase()}</TitleText>
+                    <CaptionText color={Theme.textSecondary}>{`by ${author}`}</CaptionText>
+                    <CaptionBlock span={2}>{description}</CaptionBlock>
+                </grid>
+            </node>
+        </item>
     );
 }
 
@@ -79,20 +80,19 @@ export async function CatalogPage(props: CatalogPageProps, std: GlyStd) {
     const content = response.text();
     const carts = extractCarts(content);
 
-    return <node>
-        <Background />
-        <grid class="1x12" style="tic80-container">
-            <item>
-                <HeaderBar {...props}/>
-            </item>
-            <item span={10}>
-                <grid class="2x2" scroll="page" style="tic80-margin-4">
-                    {...carts.map(cart => <Card {...cart} image={`${base_url}/${cart.image}`} />)}
+    const dom = (
+        <node>
+            <Background />
+            <grid class="1x12" style="tic80-container">
+                <HeaderBar {...props} />
+                <grid span={10} class="2x2" scroll="page" style="tic80-margin-4">
+                    {...carts.map(cart => <Card {...cart} image={cart.image} />)}
                 </grid>
-            </item>
-            <item>
                 <FooterHints />
-            </item>
-        </grid>
-    </node>;
+            </grid>
+        </node>
+    );
+
+    std.ui.focus(`#cart-${props.focus ?? carts[0]?.cart}`);
+    return dom;
 }

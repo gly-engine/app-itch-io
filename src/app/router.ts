@@ -87,7 +87,8 @@ export async function goToPage<T extends PagePath>(
       throw new Error("Page not found: " + path);
     }
 
-    const element: JSX.Element = await component(params as any, _std);
+    const dom = component(params as any, _std);
+    const element = dom instanceof Promise? await dom: dom;
 
     // @ts-ignore
     _currentApp = _std.node.spawn(element, _rootApp);
