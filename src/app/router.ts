@@ -77,6 +77,7 @@ export async function goToPage<T extends PagePath>(
     _currentApp = undefined;
   }
 
+  _std.node.pause(_errorPageApp);
   _std.node.resume(_loadPageApp);
 
   try {
