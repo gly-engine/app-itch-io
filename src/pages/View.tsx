@@ -1,10 +1,8 @@
-/**
- * @file pages/View.tsx
- * @author RodrigoDornelles
- */
-import { createState, Image, Rect, Text, TextBlock } from "node_modules/@gamely/acai-jsx/src";
+import { createState } from "node_modules/@gamely/acai-jsx/src";
+import { Image, Rect } from "node_modules/@gamely/acai-jsx/src/basics";
 import { GlyStd } from "@gamely/gly-types";
-import { Background, TIC80_COLORS, TIC80_PALETTE } from "src/app/color";
+import { Background, Theme } from "src/app/color";
+import { BodyBlock, CaptionBlock, CaptionText, HeroText } from "src/app/typography";
 import { http } from "src/app/http";
 import { extractCartInfos } from "src/app/scraper";
 import { goToPage } from "src/app/router";
@@ -14,22 +12,24 @@ type ViewPageProps = {
 }
 
 const Button = (props: { label: string, click: () => unknown }, std: GlyStd) => {
-  const [getBackgroundColor, setBackgroundColor] = createState<number>(TIC80_PALETTE.Unfocus)
+  const [getBackgroundColor, setBackgroundColor] = createState<number>(Theme.surface);
+  const [getBorderColor, setBorderColor] = createState<number>(Theme.border);
 
   return (
-    <style width="80%" top="4px" bottom="4px">
-      <node
-        click={props.click}
-        focus={() => setBackgroundColor(TIC80_PALETTE.Focus)}
-        unfocus={() => setBackgroundColor(TIC80_PALETTE.Unfocus)}
-      >
-        <Rect
-          backgroundColor={getBackgroundColor}
-          borderColor={TIC80_COLORS.White}
-        />
-        <Text content={props.label} />
-      </node>
-    </style>
+    <node
+      click={props.click}
+      focus={() => {
+        setBackgroundColor(Theme.surfaceFocus);
+        setBorderColor(Theme.borderFocus);
+      }}
+      unfocus={() => {
+        setBackgroundColor(Theme.surface);
+        setBorderColor(Theme.border);
+      }}
+    >
+      <Rect backgroundColor={getBackgroundColor} borderColor={getBorderColor} />
+      <CaptionText align="center" color={Theme.textPrimary}>{props.label}</CaptionText>
+    </node>
   );
 }
 
@@ -37,25 +37,40 @@ export async function ViewPage({ cart }: ViewPageProps, std: GlyStd) {
   const response = await http.get(`/play?cart=${cart}`);
   const content = response.text();
   const info = extractCartInfos(content);
+  const hasDescription = info.description.trim().length > 0;
+  const description = hasDescription ? info.description : "description empty...";
 
   return <node>
     <Background />
-    <item style="tic80-container">
-      <node>
-        <Rect backgroundColor={TIC80_COLORS.Black} />
-        <grid class="1x12" style="tic80-margin-8">
-          <Text content={info.title} />
-          <grid span={3} class="2x1">
+    <grid class="1x12" style="tic80-container">
+      <item>
+        <CaptionText align="center" color={Theme.accent}>cartridge details</CaptionText>
+      </item>
+      <HeroText span={2}>{info.title}</HeroText>
+      <CaptionText align="center" color={Theme.textSecondary}>{`by ${info.author}`}</CaptionText>
+      <item span={4} style="tic80-margin-8">
+        <node>
+          <Rect backgroundColor={Theme.surface} borderColor={Theme.border}/>
+          <grid class="2x1" style="tic80-margin-8">
             <Image src={info.image} />
-            <grid class="1x3" style="tic80-margin-8">
-              <Button label="Play" click={() => goToPage('/play/:cart', {cart: info.download})}/>
-              <Button label="Back" click={() => goToPage('/list/:page/:cat/:sort', {page: 0, cat: 0, sort: 0})}/>
+            <grid class="1x4" style="tic80-margin-8">
+              <Button label="play" click={() => goToPage('/play/:cart', {cart: info.download})}/>
+              <Button label="back" click={() => goToPage('/list/:page/:cat/:sort', {page: 0, cat: 0, sort: 0})}/>
+              <CaptionBlock>tic-80 cart from tic80.com</CaptionBlock>
+              <CaptionText color={Theme.accent}>a select · b back</CaptionText>
             </grid>
           </grid>
-          <Text content={`Author: ${info.author}`} align="left" />
-          <TextBlock span={3} content={info.description} align="justify" valign="top" />
-        </grid>
-      </node>
-    </item>
+        </node>
+      </item>
+      <item span={4} style="tic80-margin-8">
+        <node>
+          <Rect backgroundColor={Theme.surface} borderColor={Theme.border}/>
+          <grid class="1x5" style="tic80-margin-8">
+            <CaptionText color={Theme.accent}>description</CaptionText>
+            <BodyBlock span={4} color={hasDescription ? Theme.textSecondary : Theme.textTertiary}>{description}</BodyBlock>
+          </grid>
+        </node>
+      </item>
+    </grid>
   </node>
 }

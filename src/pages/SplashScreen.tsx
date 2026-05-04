@@ -1,14 +1,14 @@
-/**
- * @file pages/View.tsx
- * @author RodrigoDornelles
- */
 import { GlyStd } from "@gamely/gly-types";
-import { Background } from "src/app/color";
-import { Text } from "node_modules/@gamely/acai-jsx/src/basics";
+import { Background, Theme } from "src/app/color";
+import { HeroText, CaptionText } from "src/app/typography";
 
 export async function SplashScreen(props: {}, std: GlyStd) {
     return <node>
         <Background/>
-        <Text content="loading..."/>
+        <grid class="1x3" style="tic80-container">
+            <CaptionText align="center" color={Theme.accent}>tic80.com</CaptionText>
+            <HeroText>loading</HeroText>
+            <CaptionText align="center">fetching cartridges...</CaptionText>
+        </grid>
     </node>
 }

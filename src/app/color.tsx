@@ -1,4 +1,4 @@
-import { Rect } from "node_modules/@gamely/acai-jsx/src/basics/index";
+import { Rect } from "node_modules/@gamely/acai-jsx/src/basics";
 import { GlyStd } from "@gamely/gly-types";
 
 export const TIC80_COLORS = {
@@ -20,11 +20,20 @@ export const TIC80_COLORS = {
   DarkGrey: 0x333C57FF
 } as const;
 
-export const TIC80_PALETTE = {
-  Focus: TIC80_COLORS.Grey,
-  Unfocus: TIC80_COLORS.Black,
+export const Theme = {
+  background: TIC80_COLORS.DarkGrey,
+  surface: TIC80_COLORS.Black,
+  surfaceRaised: TIC80_COLORS.Purple,
+  surfaceFocus: TIC80_COLORS.DarkBlue,
+  border: TIC80_COLORS.Grey,
+  borderFocus: TIC80_COLORS.LightBlue,
+  accent: TIC80_COLORS.Cyan,
+  accentMuted: TIC80_COLORS.Blue,
+  danger: TIC80_COLORS.Red,
+  warning: TIC80_COLORS.Yellow,
+  textPrimary: TIC80_COLORS.White,
+  textSecondary: TIC80_COLORS.LightGrey,
+  textTertiary: TIC80_COLORS.Grey,
 } as const;
 
-export const BackgroundColor = TIC80_COLORS.DarkGrey;
-
-export const Background = (_: {}, std: GlyStd) => <Rect backgroundColor={BackgroundColor}/>;
+export const Background = (_: {}, std: GlyStd) => <Rect backgroundColor={Theme.background}/>;

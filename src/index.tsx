@@ -10,6 +10,11 @@ export const meta = {
     description: 'A standalone client for tic80.com that runs anywhere - including homebrew consoles.'
 }
 
+export const fonts = [
+    'Silkscreen:https://fonts.gstatic.com/s/silkscreen/v6/m8JXjfVPf62XiF7kO-i9ULQ.ttf',
+    'SilkscreenBold:https://fonts.gstatic.com/s/silkscreen/v6/m8JUjfVPf62XiF7kO-i9aAhATms.ttf',
+]
+
 export const config = {
     require: 'http'
 }
