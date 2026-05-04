@@ -5,7 +5,7 @@ import { loadPageSystem, goToPage } from "./app/router"
 import { Pages } from "./pages";
 
 export const meta = {
-    title: 'tic80.gly.sh',
+    title: 'tic80.com',
     version: '0.0.1',
     description: 'A standalone client for tic80.com that runs anywhere - including homebrew consoles.'
 }
@@ -27,5 +27,6 @@ export const callbacks = {
         if (std.key.press.right) std.ui.focus('right')
         if (std.key.press.down) std.ui.focus('down')
         if (std.key.press.up) std.ui.focus('up')
+        if (std.key.press.a) std.ui.press()
     }
 }

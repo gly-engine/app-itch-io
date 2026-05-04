@@ -1,10 +1,13 @@
 import { GlyStd } from "@gamely/gly-types";
-import * as HTML from "../thirdy-party/findstr_htmldom"
-import { Image, Text, TextBlock } from "node_modules/@gamely/acai-jsx/src/basics";
+import { Image, Rect, Text, TextBlock } from "node_modules/@gamely/acai-jsx/src/basics";
 import { base_url, http } from "src/app/http";
-import { Background } from "src/app/color";
+import { Background, TIC80_PALETTE } from "src/app/color";
+import { goToPage } from "src/app/router";
+import { createState } from "node_modules/@gamely/acai-jsx/src";
+import { extractCarts } from "src/app/scraper";
 
 type CardProp = {
+    cart: string;
     title: string;
     description: string;
     author: string;
@@ -17,55 +20,24 @@ type CatalogPageProps = {
     cat: `${number}`;
 }
 
-export type Cart = {
-    title: string;
-    description: string;
-    author: string;
-    image: string;
-};
+export function Card({cart, image, title, description}: CardProp, std: GlyStd) {
+    const [getBackgroundColor, setBackgroundColor] = createState<number>(TIC80_PALETTE.Unfocus)
 
-export function extractCarts(html: string): Cart[] {
-    const [root, err] = HTML.parse(html);
-    if (!root) {
-        throw new Error(err);
-    }
-
-    const carts = root.select(".cart");
-    const results: Cart[] = [];
-
-    for (const cart of carts) {
-        const titleNode = cart.select("h2")[0];
-        const title = titleNode?.text() ?? null;
-
-        const texts = cart.select(".text-muted");
-        const description = texts[0]?.text() ?? null;
-        const author = texts[1]?.text() ?? null;
-
-        const thumb = cart.select(".thumbnail")[0];
-        const imgNode = thumb?.select("img")[0];
-        const image = imgNode?.attr?.src as string ?? null;
-
-        results.push({
-            title,
-            description,
-            author,
-            image,
-        });
-    }
-
-    return results;
-}
-
-export function Card(props: CardProp, std: GlyStd) {
     return (
         <style width={240} height={240}>
-            <grid class="1x7">
-                <item span={4}>
-                    <Image src={props.image} />
-                </item>
-                <Text font_size={24} align={"left"}>{props.title}</Text>
-                <TextBlock span={2} align={"justify"}>{props.description}</TextBlock>
-            </grid>
+            <node
+            click={() => goToPage('/view/:cart', {cart})}
+            focus={() => setBackgroundColor(TIC80_PALETTE.Focus)}
+            unfocus={() => setBackgroundColor(TIC80_PALETTE.Unfocus)}>
+                <Rect backgroundColor={getBackgroundColor}/>
+                <grid class="1x7" style="tic80-margin-2">
+                    <item span={4}>
+                        <Image src={image} />
+                    </item>
+                    <Text font_size={24} align={"left"}>{title}</Text>
+                    <TextBlock span={2} align={"justify"}>{description}</TextBlock>
+                </grid>
+            </node>
         </style>
     );
 }
