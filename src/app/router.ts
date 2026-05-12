@@ -24,5 +24,9 @@ export function loadPages(
   errorPage: AnyPageFn,
   splashPage: AnyPageFn,
 ) {
-  setRouter({ std, pages, error: errorPage, splash: splashPage });
+  setRouter({ std, unload_images: true });
+  
+  router.registerAll(pages);
+  router.register('@error', errorPage);
+  router.register('@splash', splashPage);
 }
