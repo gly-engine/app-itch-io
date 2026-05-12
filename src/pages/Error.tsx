@@ -3,14 +3,14 @@ import { Rect } from "node_modules/@gamely/acai-jsx/src/basics";
 import { GlyStd } from "@gamely/gly-types";
 import { Background, Theme } from "src/app/color";
 import { BodyBlock, CaptionText, HeroText } from "src/app/typography";
-import { goToPage } from "src/app/router";
+import { goToHome, goToPage } from "src/app/router";
 
 type ErrorPageProps = {
     message: () => string;
 }
 
 function goBackToList() {
-    goToPage('/list/:page/:cat/:sort', {page: 0, cat: 0, sort: 0});
+    goToHome()
 }
 
 function BackButton(_: {}, std: GlyStd) {

@@ -10,10 +10,5 @@ export async function PlayPage(props: {cart: string}, std: GlyStd) {
 
     native_libretro_url(`libretro+tic80+${props.cart}`)
 
-    /**
-     * @bug the router not working without a promise in a page
-     */
-    await http.get('/')
-
     return <node/>
 }

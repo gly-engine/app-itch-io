@@ -16,14 +16,14 @@ type CardProp = {
 }
 
 type CatalogPageProps = {
-    sort: `${number}`;
-    page: `${number}`;
-    cat: `${number}`;
-    focus?: `${number}`;
+    sort: number;
+    page: number;
+    cat: number;
+    focus?: number;
 }
 
 function HeaderBar(props: CatalogPageProps, std: GlyStd) {
-    const page = Number(props.page) + 1;
+    const page = props.page + 1;
 
     return <node>
         <Rect backgroundColor={Theme.surface} borderColor={Theme.border} />
@@ -54,7 +54,7 @@ export function Card({ cart, image, title, description, author }: CardProp, std:
     return (
         <item id={`cart-${cart}`} style="tic80-cart">
             <node
-                click={() => goToPage('/view/:cart', { cart })}
+                click={() => goToPage('/view', { cart: Number(cart) })}
                 focus={() => {
                     setBackgroundColor(Theme.surfaceFocus);
                     setBorderColor(Theme.borderFocus);
@@ -80,7 +80,7 @@ export async function CatalogPage(props: CatalogPageProps, std: GlyStd) {
     const content = response.text();
     const carts = extractCarts(content);
 
-    const dom = (
+    return (
         <node>
             <Background />
             <grid class="1x12" style="tic80-container">
@@ -92,7 +92,4 @@ export async function CatalogPage(props: CatalogPageProps, std: GlyStd) {
             </grid>
         </node>
     );
-
-    std.ui.focus(`#cart-${props.focus ?? carts[0]?.cart}`);
-    return dom;
 }
