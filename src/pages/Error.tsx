@@ -6,7 +6,7 @@ import { BodyBlock, CaptionText, HeroText } from "src/app/typography";
 import { goToHome, goToPage } from "src/app/router";
 
 type ErrorPageProps = {
-    message: () => string;
+    getMessage: (this: void) => string;
 }
 
 function goBackToList() {
@@ -32,7 +32,7 @@ function BackButton(_: {}, std: GlyStd) {
     </node>;
 }
 
-export async function ErrorPage(props: ErrorPageProps, std: GlyStd) {
+export function ErrorPage(props: ErrorPageProps, std: GlyStd) {
     return <node
         key={() => {
             if (std.key.press.b || std.key.press.menu) {
@@ -42,7 +42,7 @@ export async function ErrorPage(props: ErrorPageProps, std: GlyStd) {
         <Background/>
         <grid class="1x5" style="tic80-container">
             <HeroText color={Theme.danger}>error</HeroText>
-            <BodyBlock span={2} align="center">{props.message}</BodyBlock>
+            <BodyBlock span={2} align="center">{props.getMessage}</BodyBlock>
             <item style="tic80-margin-8">
                 <BackButton />
             </item>

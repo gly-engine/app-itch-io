@@ -1,6 +1,6 @@
+import { AcaiRouterPageError, AcaiRouterPageSplash, createRouter } from "node_modules/@gamely/acai-jsx/src/runtime/router"
 import type { GlyStd } from "@gamely/gly-types"
 import type { Pages } from "../pages"
-import { createRouter } from "./acai_router"
 
 const [router, setRouter] = createRouter<typeof Pages>();
 
@@ -16,13 +16,11 @@ export const replacePage = router.replace;
 
 export const getCurrentPage = router.current;
 
-type AnyPageFn = (props: any, std: GlyStd) => JSX.Element | Promise<JSX.Element>;
-
 export function loadPages(
   std: GlyStd,
   pages: typeof Pages,
-  errorPage: AnyPageFn,
-  splashPage: AnyPageFn,
+  errorPage: AcaiRouterPageError,
+  splashPage: AcaiRouterPageSplash,
 ) {
   setRouter({ std, unload_images: true });
   

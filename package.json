@@ -4,8 +4,8 @@
     "build": "gly-cli build-html --cwd build src/index.lua"
   },
   "devDependencies": {
-    "@gamely/acai-jsx": "github:gly-engine/acai-jsx#6a927aff38e81fd2c21873295d14ae67725e761d",
-    "@gamely/gly-cli": "github:gly-engine/gly-engine#ba39c6af2c22792adb68653c8b0b4f3c52a96745",
+    "@gamely/acai-jsx": "github:gly-engine/acai-jsx#54331b0f10e00ceb0fa3a29028db3489bc64a5b2",
+    "@gamely/gly-cli": "github:gly-engine/gly-engine#5f24f8181ff8dbe4d5d1f069de999bb8538377b5",
     "@gamely/tstl-import": "0.0.3",
     "@gamely/tstl-number": "0.0.3",
     "@typescript-to-lua/language-extensions": "^1.19.0",
