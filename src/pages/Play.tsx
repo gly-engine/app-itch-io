@@ -1,5 +1,4 @@
 import { GlyStd } from "@gamely/gly-types";
-import { http } from "src/app/http";
 
 declare function native_libretro_url(game: string): void;
 
