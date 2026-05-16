@@ -3,6 +3,7 @@ import { loadStylesheet } from "./app/stylesheet";
 import { loadHttp } from "./app/http"
 import { loadPages, goToPage } from "./app/router"
 import { Pages, ErrorPage, SplashScreen } from "./pages";
+import { loadTimers } from "./app/timers";
 
 export const meta = {
     title: 'tic80.com',
@@ -22,6 +23,7 @@ export const config = {
 export const callbacks = {
     load: (_: never, std: GlyStd) => {
         loadHttp(std);
+        loadTimers(std);
         loadStylesheet(std);
         loadPages(std, Pages, ErrorPage, SplashScreen);
 

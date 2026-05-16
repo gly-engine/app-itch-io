@@ -1,19 +1,10 @@
+import { createTimer } from "node_modules/@gamely/acai-jsx/src";
 import { GlyStd } from "@gamely/gly-types";
-/*
-declare function createTimer();
 
-const [timer, SetTimerConfig] = createTimer()
+const [timer, setTimer] = createTimer()
 
 export const sleep = timer.sleep
 
-export const setTimeout = timer.timeout
-
-export const setInterval = timer.interval
-
-export const [getTime] = timer.createClock('%H:%M');
-
 export function loadTimers(std: GlyStd) {
-    SetTimerConfig({std});
+    setTimer({std});
 }
-
-    */
