@@ -25,7 +25,7 @@ export const callbacks = {
         loadStylesheet(std);
         loadPages(std, Pages, ErrorPage, SplashScreen);
 
-        goToPage("/list", {page: 0, cat: 0, sort: 0}).then(() => std.ui.focus('.tic80-cart'));
+        goToPage("/list", {page: 0, cat: 0, sort: 0});
     },
     key: (_: never, std: GlyStd) => {
         if (std.key.press.left) std.ui.focus('left')

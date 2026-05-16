@@ -19,7 +19,6 @@ type CatalogPageProps = {
     sort: number;
     page: number;
     cat: number;
-    focus?: number;
 }
 
 function HeaderBar(props: CatalogPageProps, std: GlyStd) {

@@ -16,13 +16,22 @@ export const replacePage = router.replace;
 
 export const getCurrentPage = router.current;
 
+/**
+ * @bug o @c focus_first 'first' mayabe not works,
+ * It could be a bug in the engine or in the acai library.
+ */
 export function loadPages(
   std: GlyStd,
   pages: typeof Pages,
   errorPage: AcaiRouterPageError,
   splashPage: AcaiRouterPageSplash,
 ) {
-  setRouter({ std, unload_images: true });
+  setRouter({ std, 
+    focus_first: ['.tic80-cart', 'first'],
+    focus_home: '.tic80-cart',
+    focus_back: 'last',
+    unload_images: true,
+  });
   
   router.registerAll(pages);
   router.register('@error', errorPage);

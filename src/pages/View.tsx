@@ -53,7 +53,7 @@ export async function ViewPage({ cart }: ViewPageProps, std: GlyStd) {
             <Image src={info.image} />
             <grid class="1x4" style="tic80-margin-8">
               <Button label="play" click={() => goToPage('/play', {cart: info.download})}/>
-              <Button label="back" click={() => backPage().then(() => std.ui.focus(`#cart-${cart}`))}/>
+              <Button label="back" click={() => backPage()}/>
               <CaptionBlock>tic-80 cart from tic80.com</CaptionBlock>
               <CaptionText color={Theme.accent}>a select · b back</CaptionText>
             </grid>
