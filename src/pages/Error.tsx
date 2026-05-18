@@ -3,14 +3,10 @@ import { Rect } from "node_modules/@gamely/acai-jsx/src/basics";
 import { GlyStd } from "@gamely/gly-types";
 import { Background, Theme } from "src/app/color";
 import { BodyBlock, CaptionText, HeroText } from "src/app/typography";
-import { goToHome, goToPage } from "src/app/router";
+import { backPage, goToHome, goToPage } from "src/app/router";
 
 type ErrorPageProps = {
     getMessage: (this: void) => string;
-}
-
-function goBackToList() {
-    goToHome()
 }
 
 function BackButton(_: {}, std: GlyStd) {
@@ -18,7 +14,7 @@ function BackButton(_: {}, std: GlyStd) {
     const [getBorderColor, setBorderColor] = createState<number>(Theme.borderFocus);
 
     return <node
-        click={goBackToList}
+        click={backPage}
         focus={() => {
             setBackgroundColor(Theme.surfaceFocus);
             setBorderColor(Theme.borderFocus);
@@ -36,7 +32,7 @@ export function ErrorPage(props: ErrorPageProps, std: GlyStd) {
     return <node
         key={() => {
             if (std.key.press.b || std.key.press.menu) {
-                goBackToList();
+                goToHome();
             }
         }}>
         <Background/>

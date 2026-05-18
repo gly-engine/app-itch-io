@@ -27,9 +27,10 @@ export function loadPages(
   splashPage: AcaiRouterPageSplash,
 ) {
   setRouter({ std, 
-    focus_first: ['.tic80-cart', 'first'],
-    focus_home: '.tic80-cart',
-    focus_back: 'last',
+    focus_seek: 'first',
+    focus_home: 'first',
+    focus_back: ['last', 'first'],
+    focus_error: 'first',
     unload_images: true,
   });
   
