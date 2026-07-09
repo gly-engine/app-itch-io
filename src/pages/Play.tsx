@@ -11,7 +11,7 @@ export function *PlayPage(props: {cart: string}, std: GlyStd) {
         throw new Error("This device not support libretro!");
     }
 
-    native_libretro_url(`libretro+tic80+${props.cart}`)
+    native_libretro_url(`tic80+${props.cart}`)
 
     const [getText, setText] = createState('Preparing your game');
 
