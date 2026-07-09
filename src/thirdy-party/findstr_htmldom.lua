@@ -175,7 +175,7 @@ local html_unescape = {
 
 function htmlunescape(html)
 	html = string.gsub(html, "&#(%d+);", function(s)
-		return utf8.char(tonumber(s))
+		return (string or utf8).char(tonumber(s))
 	end)
 	html = string.gsub(html, "&(%a+);", html_unescape)
 	return html

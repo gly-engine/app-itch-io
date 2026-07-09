@@ -1,8 +1,9 @@
 import type { GlyStd } from "@gamely/gly-types";
 import { loadStylesheet } from "./app/stylesheet";
 import { loadHttp } from "./app/http"
-import { loadPageSystem, goToPage } from "./app/router"
-import { Pages } from "./pages";
+import { loadPages, goToPage } from "./app/router"
+import { Pages, ErrorPage, SplashScreen } from "./pages";
+import { loadTimers } from "./app/timers";
 
 export const meta = {
     title: 'tic80.com',
@@ -22,10 +23,11 @@ export const config = {
 export const callbacks = {
     load: (_: never, std: GlyStd) => {
         loadHttp(std);
+        loadTimers(std);
         loadStylesheet(std);
-        loadPageSystem(std, Pages, Pages['/splashscreen'], Pages['/error']);
+        loadPages(std, Pages, ErrorPage, SplashScreen);
 
-        goToPage("/list/:page/:cat/:sort", {page: 0, cat: 0, sort: 0});
+        goToPage("/list", {page: 0, cat: 0, sort: 0});
     },
     key: (_: never, std: GlyStd) => {
         if (std.key.press.left) std.ui.focus('left')

@@ -3,14 +3,10 @@ import { Rect } from "node_modules/@gamely/acai-jsx/src/basics";
 import { GlyStd } from "@gamely/gly-types";
 import { Background, Theme } from "src/app/color";
 import { BodyBlock, CaptionText, HeroText } from "src/app/typography";
-import { goToPage } from "src/app/router";
+import { backPage, goToHome, goToPage } from "src/app/router";
 
 type ErrorPageProps = {
-    message: () => string;
-}
-
-function goBackToList() {
-    goToPage('/list/:page/:cat/:sort', {page: 0, cat: 0, sort: 0});
+    getMessage: (this: void) => string;
 }
 
 function BackButton(_: {}, std: GlyStd) {
@@ -18,7 +14,7 @@ function BackButton(_: {}, std: GlyStd) {
     const [getBorderColor, setBorderColor] = createState<number>(Theme.borderFocus);
 
     return <node
-        click={goBackToList}
+        click={backPage}
         focus={() => {
             setBackgroundColor(Theme.surfaceFocus);
             setBorderColor(Theme.borderFocus);
@@ -32,17 +28,17 @@ function BackButton(_: {}, std: GlyStd) {
     </node>;
 }
 
-export async function ErrorPage(props: ErrorPageProps, std: GlyStd) {
+export function ErrorPage(props: ErrorPageProps, std: GlyStd) {
     return <node
         key={() => {
             if (std.key.press.b || std.key.press.menu) {
-                goBackToList();
+                goToHome();
             }
         }}>
         <Background/>
         <grid class="1x5" style="tic80-container">
             <HeroText color={Theme.danger}>error</HeroText>
-            <BodyBlock span={2} align="center">{props.message}</BodyBlock>
+            <BodyBlock span={2} align="center">{props.getMessage}</BodyBlock>
             <item style="tic80-margin-8">
                 <BackButton />
             </item>

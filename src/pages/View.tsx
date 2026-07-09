@@ -5,7 +5,7 @@ import { Background, Theme } from "src/app/color";
 import { BodyBlock, CaptionBlock, CaptionText, HeroText } from "src/app/typography";
 import { http } from "src/app/http";
 import { extractCartInfos } from "src/app/scraper";
-import { goToPage } from "src/app/router";
+import { backPage, goToPage } from "src/app/router";
 
 type ViewPageProps = {
   cart: number;
@@ -52,8 +52,8 @@ export async function ViewPage({ cart }: ViewPageProps, std: GlyStd) {
           <grid class="2x1" style="tic80-margin-8">
             <Image src={info.image} />
             <grid class="1x4" style="tic80-margin-8">
-              <Button label="play" click={() => goToPage('/play/:cart', {cart: info.download})}/>
-              <Button label="back" click={() => goToPage('/list/:page/:cat/:sort', {page: 0, cat: 0, sort: 0})}/>
+              <Button label="play" click={() => goToPage('/play', {cart: info.download})}/>
+              <Button label="back" click={() => backPage()}/>
               <CaptionBlock>tic-80 cart from tic80.com</CaptionBlock>
               <CaptionText color={Theme.accent}>a select · b back</CaptionText>
             </grid>
